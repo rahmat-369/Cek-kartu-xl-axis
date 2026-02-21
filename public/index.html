@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sidompul Checker (XL/AXIS)</title>
+    <style>
+      body { font-family: system-ui, Arial, sans-serif; margin: 0; background: #0b1220; color: #e7eefc; }
+      .wrap { max-width: 860px; margin: 0 auto; padding: 28px 16px 60px; }
+      .card { background: #111a2e; border: 1px solid rgba(255,255,255,.08); border-radius: 14px; padding: 18px; }
+      h1 { font-size: 20px; margin: 0 0 6px; }
+      p { margin: 0 0 14px; opacity: .85; }
+      .row { display: flex; gap: 10px; flex-wrap: wrap; }
+      input { flex: 1; min-width: 220px; padding: 12px 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,.12); background: #0b1220; color: #e7eefc; }
+      button { padding: 12px 14px; border-radius: 10px; border: 0; background: #2a6bff; color: white; cursor: pointer; font-weight: 600; }
+      button:disabled { opacity: .6; cursor: not-allowed; }
+      .hint { font-size: 12px; margin-top: 8px; opacity: .7; }
+      pre { margin: 16px 0 0; padding: 14px; border-radius: 12px; background: #0b1220; border: 1px solid rgba(255,255,255,.08); overflow: auto; }
+      .ok { color: #7CFF9A; }
+      .bad { color: #FF7C7C; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="card">
+        <h1>Sidompul Checker (XL/AXIS)</h1>
+        <p>Masukkan nomor (boleh format 08… / 628…); hasil akan tampil di bawah.</p>
+
+        <div class="row">
+          <input id="number" placeholder="Contoh: 6285934417318" autocomplete="off" />
+          <button id="btn">Cek</button>
+        </div>
+        <div class="hint">Tips: jangan spam request. Kalau sering error, kemungkinan endpoint sedang down/limit.</div>
+
+        <pre id="out">{ siap… }</pre>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+  </html> 
