@@ -1,236 +1,41 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sidompul Checker</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sidompul Checker (XL/AXIS)</title>
+    <style>
+      body { font-family: system-ui, Arial, sans-serif; margin: 0; background: #0b1220; color: #e7eefc; }
+      .wrap { max-width: 860px; margin: 0 auto; padding: 28px 16px 60px; }
+      .card { background: #111a2e; border: 1px solid rgba(255,255,255,.08); border-radius: 14px; padding: 18px; }
+      h1 { font-size: 20px; margin: 0 0 6px; }
+      p { margin: 0 0 14px; opacity: .85; }
+      .row { display: flex; gap: 10px; flex-wrap: wrap; }
+      input { flex: 1; min-width: 220px; padding: 12px 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,.12); background: #0b1220; color: #e7eefc; }
+      button { padding: 12px 14px; border-radius: 10px; border: 0; background: #2a6bff; color: white; cursor: pointer; font-weight: 600; }
+      button:disabled { opacity: .6; cursor: not-allowed; }
+      .hint { font-size: 12px; margin-top: 8px; opacity: .7; }
+      pre { margin: 16px 0 0; padding: 14px; border-radius: 12px; background: #0b1220; border: 1px solid rgba(255,255,255,.08); overflow: auto; }
+      .ok { color: #7CFF9A; }
+      .bad { color: #FF7C7C; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="card">
+        <h1>Sidompul Checker (XL/AXIS)</h1>
+        <p>Masukkan nomor (boleh format 08… / 628…); hasil akan tampil di bawah.</p>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+        <div class="row">
+          <input id="number" placeholder="Contoh: 6285934417318" autocomplete="off" />
+          <button id="btn">Cek</button>
+        </div>
+        <div class="hint">Tips: jangan spam request. Kalau sering error, kemungkinan endpoint sedang down/limit.</div>
 
-<style>
-:root{
-  --bg:#0e0f13;
-  --card:#16181f;
-  --border:rgba(255,255,255,0.06);
-  --text:#f1f5f9;
-  --muted:#9ca3af;
-  --accent:linear-gradient(135deg,#8b5cf6,#22c55e);
-}
+        <pre id="out">{ siap… }</pre>
+      </div>
+    </div>
 
-*{margin:0;padding:0;box-sizing:border-box}
-body{
-  font-family:'Inter',sans-serif;
-  background:var(--bg);
-  color:var(--text);
-}
-
-/* NAVBAR */
-.nav{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:18px 20px;
-  border-bottom:1px solid var(--border);
-  background:#111217;
-}
-.nav-left{
-  display:flex;
-  flex-direction:column;
-}
-.nav-title{
-  font-weight:700;
-  font-size:16px;
-}
-.nav-sub{
-  font-size:12px;
-  color:var(--muted);
-}
-.nav-right{
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-.profile{
-  width:38px;
-  height:38px;
-  border-radius:50%;
-  background-size:cover;
-  background-position:center;
-  border:2px solid #22c55e;
-}
-.status{
-  font-size:12px;
-  color:#22c55e;
-}
-
-/* HERO */
-.hero{
-  padding:60px 20px 30px;
-  text-align:center;
-}
-.hero h1{
-  font-size:30px;
-  font-weight:800;
-}
-.hero span{
-  background:var(--accent);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
-.hero p{
-  margin-top:14px;
-  color:var(--muted);
-  font-size:14px;
-}
-
-/* CARD INPUT */
-.card{
-  margin:0 20px;
-  padding:22px;
-  background:var(--card);
-  border-radius:18px;
-  border:1px solid var(--border);
-}
-.input-group{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-}
-input{
-  padding:14px;
-  border-radius:12px;
-  border:1px solid var(--border);
-  background:#111217;
-  color:white;
-  font-size:14px;
-}
-button{
-  padding:14px;
-  border-radius:12px;
-  border:none;
-  font-weight:600;
-  background:var(--accent);
-  color:white;
-  cursor:pointer;
-  transition:0.3s;
-}
-button:hover{opacity:0.9}
-
-/* RESULT */
-.result{
-  margin-top:18px;
-  padding:16px;
-  border-radius:14px;
-  background:#111217;
-  border:1px solid var(--border);
-  font-size:13px;
-  display:none;
-}
-
-/* WHATSAPP */
-.join{
-  margin:50px 20px;
-  padding:22px;
-  border-radius:18px;
-  background:linear-gradient(135deg,#1e293b,#0f766e);
-  text-align:center;
-}
-.join h2{
-  font-size:18px;
-  margin-bottom:10px;
-}
-.join a{
-  display:inline-block;
-  margin-top:10px;
-  padding:12px 18px;
-  border-radius:12px;
-  background:#0e0f13;
-  color:white;
-  text-decoration:none;
-  font-weight:600;
-}
-
-footer{
-  text-align:center;
-  padding:20px;
-  font-size:12px;
-  color:var(--muted);
-}
-</style>
-</head>
-
-<body>
-
-<div class="nav">
-  <div class="nav-left">
-    <div class="nav-title">NAMA_WEB</div>
-    <div class="nav-sub">Halaman Utama</div>
-  </div>
-
-  <div class="nav-right">
-    <div class="status">Online</div>
-    <div class="profile" style="background-image:url('LINK_GAMBAR_PROFILE')"></div>
-  </div>
-</div>
-
-<section class="hero">
-  <h1>Cek Nomor <span>XL / AXIS</span></h1>
-  <p>Masukkan nomor untuk melihat informasi paket dan detail lainnya.</p>
-</section>
-
-<div class="card">
-  <div class="input-group">
-    <input id="number" type="text" placeholder="Contoh: 6285xxxxxxx">
-    <button onclick="checkNumber()">Cek Nomor</button>
-  </div>
-
-  <div id="result" class="result"></div>
-</div>
-
-<div class="join">
-  <h2>Bergabung Dengan Saluran WhatsApp</h2>
-  <p>Dapatkan update dan informasi terbaru.</p>
-  <a href="LINK_WHATSAPP" target="_blank">Gabung Sekarang</a>
-</div>
-
-<footer>
-© 2026 NAMA_WEB
-</footer>
-
-<script>
-async function checkNumber(){
-  const number = document.getElementById("number").value;
-  const resultBox = document.getElementById("result");
-
-  resultBox.style.display = "block";
-  resultBox.innerHTML = "Memproses...";
-
-  try{
-    const res = await fetch("/api/check",{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({number})
-    });
-
-    const data = await res.json();
-
-    if(!data.success){
-      resultBox.innerHTML = data.message;
-      return;
-    }
-
-    let html = "";
-    for(const key in data.results){
-      html += "<div><strong>"+key+"</strong>: "+data.results[key]+"</div>";
-    }
-
-    resultBox.innerHTML = html;
-
-  }catch(err){
-    resultBox.innerHTML = "Terjadi kesalahan.";
-  }
-}
-</script>
-
-</body>
-  </html>
+    <script src="app.js"></script>
+  </body>
+</html>
